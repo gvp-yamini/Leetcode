@@ -1,0 +1,66 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        
+        ListNode curr = null;
+        if( l1 == null && l2 == null){
+            return curr;
+        }else if(l1 == null && l2 != null){
+            return l2;
+        }else if(l1 != null && l2 == null){
+            return l1;
+        }
+        int carry = 0, sum = 0;
+        ListNode result=null,head=null;
+        while(l1 != null && l2 != null){
+            sum = l1.val + l2.val+carry;
+            carry = sum>9?1:0;
+            sum = sum%10;
+            result = new ListNode(sum);
+            result.next = null;
+            if(head==null){
+                head = result;
+                curr = head;
+            }else{
+                curr.next = result;
+                curr= curr.next;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        
+        while(l1!=null && l2==null){
+            sum = l1.val + carry;
+            carry = sum>9?1:0;
+            result = new ListNode(sum%10);
+            result.next = null;
+            curr.next = result;
+            curr = curr.next;
+            l1 = l1.next;
+        }
+        
+         while(l1==null && l2!=null){
+            sum = l2.val + carry;
+            carry = sum>9?1:0;
+            result = new ListNode(sum%10);
+            result.next = null;
+            curr.next = result;
+            curr = curr.next;
+            l2 = l2.next;
+        }
+        
+        if(carry!=0){
+            result = new ListNode(1);
+            result.next = null;
+            curr.next = result;
+        }
+        return head;
+    }
+}
